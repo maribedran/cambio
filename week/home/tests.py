@@ -11,3 +11,7 @@ class HomeTest(TestCase):
 	def test_template(self):
 		'Response must render template'
 		self.assertTemplateUsed(self.response, 'home/index.html')
+
+	def test_context(self):
+		'Rates must be in context'
+		self.assertEqual(self.response.context['2014-11-14'], 2.6059)
