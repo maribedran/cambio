@@ -35,7 +35,7 @@ def get_name(currency):
 	elif currency == 'EUR':
 		currency_name = 'Euro'
 	elif currency == 'ARS':
-		currency_name = 'Pesos argentinos'
+		currency_name = 'Peso argentino'
 
 	return currency_name
 
