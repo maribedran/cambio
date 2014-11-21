@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS = ['home/templates/base', 'home/templates/home']
 
 # Application definition
 
