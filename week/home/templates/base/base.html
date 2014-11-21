@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cambio semanal</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			var dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            	meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+    $('#container').highcharts({
+        title: {
+            text: 'Cotação do {{ currency_name|lower }} na última semana',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Fonte: Jsonrates',
+            x: -20
+        },
+        xAxis: {
+            categories: [
+            	{% for key in week_rates.keys %}
+            		dias[new Date('{{ key }}').getDay()] +
+            		 ', ' +
+            		 new Date('{{ key }}').getDate().toString() +
+            		 ' de ' +
+            		 meses[new Date('{{ key }}').getMonth()] +
+            		  ' de ' +
+            		  new Date('{{ key }}').getFullYear().toString()
+            		  ,
+				{% endfor %}
+			]
+        },
+        yAxis: {
+            title: {
+                text: '{{ currency_name }}'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valuePrefix: 'R$'
+        },
+        series: [{
+            name: '{{ currency_name }}',
+            data: [
+				{% for key, value in week_rates.items %}
+					{{ value }}
+					,
+				{% endfor %}
+            
+            ]
+        },
+       	]
+    });
+});
+	</script>
+</head>
+<body>
+	{% block content %}
+	{% endblock %}
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</html>
