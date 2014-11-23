@@ -21,7 +21,7 @@ def get_currency(currency):
 	week_rates = {}
 
 	for date, values in json['rates'].iteritems():
-	    histrate = round(float(values['rate']), 2)
+	    histrate = float(values['rate'])
 	    utc_date = values['utctime']
 	    week_rates[utc_date] = histrate
 
