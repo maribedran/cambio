@@ -12,14 +12,11 @@ class HomeTest(TestCase):
 		'Response must render template'
 		self.assertTemplateUsed(self.response, 'home/index.html')
 
-	# def test_context(self):
-	# 	'Rates must be in context'
-	# 	self.assertEqual(self.response.context, 'week_rates')
-
 class DateTest(TestCase):
 	def setUp(self):
-		self.context = self.client.get('/').context
+		self.response = self.client.get('/')
+		self.context = self.response.context
 
-	def test_datetime(self):
-		self.assertEqual(len(self.context['week_rates'].keys()), 7)
-		
+	def test_length(self):
+		'Context must have one item per day of the week + 1'
+		self.assertEqual(len(self.context['week_rates'].items()), 8)
